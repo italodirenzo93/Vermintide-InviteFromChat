@@ -32,22 +32,22 @@ mod:command("invite", CMD_INVITE_HELP, function (...)
 
   local friends_list = get_friends_list()
 
-  local da_bois = {}
+  local friends_to_invite = {}
   for i, friend in ipairs(friend_names) do
     if friends_list[friend] ~= nil then
-      table.insert(da_bois, friends_list[friend])
+      table.insert(friends_to_invite, friends_list[friend])
     end
   end
 
-  if #da_bois == 0 then
+  if #friends_to_invite == 0 then
     mod:echo("%s was not found in your friends list", table.concat(friend_names, ", "))
     return
   end
 
   -- Create steam lobby
   local lobby = Network.create_steam_lobby("private", 4)
-  for i, boi in ipairs(da_bois) do
-    Friends.invite(boi, lobby)
+  for i, friend in ipairs(friends_to_invite) do
+    Friends.invite(friend, lobby)
   end
 
   mod:echo("Invites sent to %s!", table.concat(friend_names, ", "))
