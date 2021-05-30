@@ -1,0 +1,11 @@
+mod = [
+	"InviteFromChat"
+]
+
+package = [
+	"resource_packages/InviteFromChat/InviteFromChat"
+]
+
+lua = [
+	"scripts/mods/InviteFromChat/*"
+]
