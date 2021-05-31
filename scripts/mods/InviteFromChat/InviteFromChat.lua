@@ -58,8 +58,9 @@ mod:command("invite", CMD_INVITE_HELP, function (...)
     for i, friend in ipairs(friends_to_invite) do
       Friends.invite(friend, lobby)
     end
-  else
     mod:echo("Invites sent to %s!", table.concat(friend_names, ", "))
+  else
+    mod:echo("No friends to invite.")
   end
 end)
 
