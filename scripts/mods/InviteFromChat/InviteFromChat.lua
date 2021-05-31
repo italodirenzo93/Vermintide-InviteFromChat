@@ -32,24 +32,34 @@ mod:command("invite", CMD_INVITE_HELP, function (...)
 
   local friends_list = get_friends_list()
 
+  -- Find the specified friends in the user's friends list
   local friends_to_invite = {}
+  local friends_not_found = {}
   for i, friend in ipairs(friend_names) do
     if friends_list[friend] ~= nil then
       table.insert(friends_to_invite, friends_list[friend])
+    else
+      table.insert(friends_not_found, friends_list[friend])
     end
   end
 
-  if #friends_to_invite == 0 then
-    mod:echo("%s was not found in your friends list", table.concat(friend_names, ", "))
-    return
+  -- Inform the user of friends that were not found in the friends list
+  if #friends_not_found > 0 then
+    local tense = "was"
+    if #friends_not_found > 1 then
+      tense = "were"
+    end
+    mod:echo("%s %s not found in friends list", table.concat(friends_not_found, ", "), tense)
   end
 
   -- Create steam lobby
-  local lobby = Network.create_steam_lobby("private", 4)
-  for i, friend in ipairs(friends_to_invite) do
-    Friends.invite(friend, lobby)
+  if #friends_to_invite > 0 then
+    local lobby = Network.create_steam_lobby("private", #friends_to_invite)
+    for i, friend in ipairs(friends_to_invite) do
+      Friends.invite(friend, lobby)
+    end
+  else
+    mod:echo("Invites sent to %s!", table.concat(friend_names, ", "))
   end
-
-  mod:echo("Invites sent to %s!", table.concat(friend_names, ", "))
 end)
 
