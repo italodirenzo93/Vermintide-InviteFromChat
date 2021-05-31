@@ -1,1 +1,5 @@
+# Editor stuff
 .vscode/
+
+# Mod bundle
+*.mod_bundle
